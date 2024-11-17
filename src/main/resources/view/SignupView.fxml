@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="499.0" prefWidth="517.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookshop.controller.SignAndDashboardController">
+    <children>
+        <AnchorPane layoutX="27.0" layoutY="26.0" prefHeight="439.0" prefWidth="458.0" style="-fx-background-color: #fff; -fx-border-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
+            <children>
+                <ImageView fx:id="closeButton" fitHeight="20.0" fitWidth="37.0" layoutX="426.0" layoutY="14.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/close-image.png" />
+                    </image>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+                <ImageView fitHeight="46.0" fitWidth="54.0" layoutX="18.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/logo.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="77.0" layoutY="18.0" text="Welcome Back To">
+                    <font>
+                        <Font name="Gabarito Regular" size="23.0" />
+                    </font>
+                </Label>
+                <Label layoutX="78.0" layoutY="46.0" text="NovelNook ">
+                    <font>
+                        <Font name="Gabarito Regular" size="16.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="20.0" fitWidth="46.0" layoutX="160.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/hand-image.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="20.0" fitWidth="46.0" layoutX="175.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/hand-image.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="73.0" layoutY="100.0" text="Enter email address">
+                    <font>
+                        <Font name="Gabarito Regular" size="13.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="registerEmailTxt" layoutX="72.0" layoutY="119.0" prefHeight="46.0" prefWidth="314.0" promptText="Enter email address" style="-fx-padding: 0 10; -fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;">
+                    <font>
+                        <Font name="Gabarito Regular" size="13.0" />
+                    </font>
+                </TextField>
+                <PasswordField fx:id="registerIUsernameTxt" layoutX="72.0" layoutY="196.0" prefHeight="46.0" prefWidth="314.0" promptText="Enter Password" style="-fx-padding: 0 10; -fx-background-color: #fafafa; -fx-border-radius: 4; -fx-background-radius: 4;">
+                    <font>
+                        <Font name="Gabarito Regular" size="13.0" />
+                    </font>
+                </PasswordField>
+                <Label layoutX="73.0" layoutY="177.0" text="Enter Username">
+                    <font>
+                        <Font name="Gabarito Regular" size="13.0" />
+                    </font>
+                </Label>
+                <JFXButton fx:id="gotoLogin" layoutX="74.0" layoutY="339.0" onAction="#creaateAccount" prefHeight="46.0" prefWidth="314.0" style="-fx-background-color: #000; -fx-border-radius: 4; -fx-background-radius: 4;" text="Sign In" textFill="WHITE">
+                    <font>
+                        <Font name="Segoe UI Bold" size="13.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <Label layoutX="78.0" layoutY="402.0" text="already have an account ?">
+                    <font>
+                        <Font name="Gabarito Regular" size="13.0" />
+                    </font>
+                </Label>
+                <Hyperlink layoutX="305.0" layoutY="399.0" onAction="#gotoSignInWindow" text="Sign in here">
+                    <font>
+                        <Font name="Gabarito Regular" size="13.0" />
+                    </font>
+                </Hyperlink>
+            <PasswordField fx:id="registerPasswordTxt" layoutX="72.0" layoutY="272.0" prefHeight="46.0" prefWidth="314.0" promptText="Enter Password" style="-fx-padding: 0 10; -fx-background-color: #fafafa; -fx-border-radius: 4; -fx-background-radius: 4;">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </PasswordField>
+            <Label layoutX="73.0" layoutY="253.0" text="Enter Password">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

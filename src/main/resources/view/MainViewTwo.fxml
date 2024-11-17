@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPane" prefHeight="584.0" prefWidth="883.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookshop.controller.MainController">
+   <children>
+      <AnchorPane layoutX="5.0" layoutY="4.0" prefHeight="570.0" prefWidth="872.0" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #fafafa;">
+         <children>
+            <ImageView fx:id="imageView3" fitHeight="155.0" fitWidth="114.0" layoutX="668.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/book-3.png" />
+               </image>
+               <effect>
+                  <Reflection>
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </Reflection>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="imageView4" fitHeight="125.0" fitWidth="97.0" layoutX="774.0" layoutY="191.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/book-2.png" />
+               </image>
+               <effect>
+                  <Reflection>
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </Reflection>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Label layoutX="34.0" layoutY="208.0" text="Escape into the world of literature at Novel Nook,">
+               <font>
+                  <Font name="Gabarito Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="115.0" text="Discover Your Next ">
+               <font>
+                  <Font name="Gabarito Regular" size="31.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="145.0" text="Favourite Book.">
+               <font>
+                  <Font name="Gabarito Regular" size="31.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="222.0" text="your haven for book lovers.">
+               <font>
+                  <Font name="Gabarito Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="253.0" text="Browse our curated collection of bestsellers,classics,">
+               <font>
+                  <Font name="Gabarito Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="269.0" text="and hidden gems. Let our expert staff guide you in">
+               <font>
+                  <Font name="Gabarito Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="285.0" text="finding your next great read. Whether you're a fiction">
+               <font>
+                  <Font name="Gabarito Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="301.0" text="fanatic, a non-fiction nerd, or a poetry enthusiast,">
+               <font>
+                  <Font name="Gabarito Regular" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="34.0" layoutY="315.0" text="in the pages with us.">
+               <font>
+                  <Font name="Gabarito Regular" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="closeButton" fitHeight="16.0" fitWidth="19.0" layoutX="845.0" layoutY="14.0" onMouseClicked="#closeWindow" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/close-image.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Circle fill="#eaeaea" layoutX="606.0" layoutY="527.0" radius="3.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Circle fill="#eaeaea" layoutX="627.0" layoutY="527.0" radius="5.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Circle fill="#eaeaea" layoutX="646.0" layoutY="527.0" radius="3.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <Circle fill="#eaeaea" layoutX="668.0" layoutY="527.0" radius="3.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <ImageView fx:id="imageView1" fitHeight="182.0" fitWidth="114.0" layoutX="372.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/book-1.png" />
+               </image>
+               <effect>
+                  <Reflection>
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </Reflection>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <ImageView fx:id="imageView2" fitHeight="257.0" fitWidth="166.0" layoutX="497.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/book-4.png" />
+               </image>
+               <effect>
+                  <Reflection>
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </Reflection>
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <JFXButton fx:id="signinButton" layoutX="44.0" layoutY="380.0" prefHeight="46.0" prefWidth="131.0" ripplerFill="#f7f7f7" style="-fx-background-color: #000; -fx-background-radius: 4; -fx-border-radius: 4;" text="Sign In" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Bold" size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="signupButton" layoutX="183.0" layoutY="380.0" prefHeight="46.0" prefWidth="131.0" ripplerFill="#f4f4f4" style="-fx-background-color: #fff; -fx-border-color: #000; -fx-border-radius: 4; -fx-background-radius: 4;" text="Sign Up">
+         <font>
+            <Font name="Segoe UI Bold" size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fitHeight="38.0" fitWidth="58.0" layoutX="34.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
