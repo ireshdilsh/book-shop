@@ -1,6 +1,6 @@
 package com.example.bookshop.model;
-
 import com.example.bookshop.db.DBConnection;
+import com.example.bookshop.dto.BookDetailsDto;
 import com.example.bookshop.dto.BookDto;
 import com.example.bookshop.utils.CrudUtil;
 
@@ -26,41 +26,29 @@ public class BookModel {
     }
 
     public boolean addNewBook(BookDto bookDto) throws SQLException, ClassNotFoundException {
-//        String sql = "insert into book (Name,CatName,Price) values (?,?,?)";
-//        Boolean resp = CrudUtil.executeCrud(sql,bookDto.getBookName(),bookDto.getCategoryName(),bookDto.getPrice());
-//        return resp == Boolean.TRUE ? "success" : "error";
-
 
         Connection connection = DBConnection.getInstance().getConnection();
         try {
-            // @autoCommit: Disables auto-commit to manually control the transaction
-            connection.setAutoCommit(false); // 1
-
-            // @isOrderSaved: Saves the order details into the orders table
+            connection.setAutoCommit(false);
             boolean isBookSaved = CrudUtil.executeCrud(
                     "insert into book(Name,CatName,Price,Supplier_Name) values (?,?,?,?)",
                   bookDto.getBookName(),bookDto.getCategoryName(),bookDto.getPrice(),bookDto.getSuplierName()
             );
-            // If the order is saved successfully
+
             if (isBookSaved) {
-                // @isOrderDetailListSaved: Saves the list of order details
                 boolean bookDesilasSaved = bookDetailsModel.saveBookDetailsList(bookDto.getBookDetailsDtos());
                 if (bookDesilasSaved) {
-                    // @commit: Commits the transaction if both order and details are saved successfully
-                    connection.commit(); // 2
+                    connection.commit();
                     return true;
                 }
             }
-            // @rollback: Rolls back the transaction if order details saving fails
-            connection.rollback(); // 3
+            connection.rollback();
             return false;
         } catch (Exception e) {
-            // @catch: Rolls back the transaction in case of any exception
             connection.rollback();
             return false;
         } finally {
-            // @finally: Resets auto-commit to true after the operation
-            connection.setAutoCommit(true); // 4
+            connection.setAutoCommit(true);
         }
 
     }
@@ -76,4 +64,22 @@ public class BookModel {
         }
         return supplier;
     }
+
+
+        public BookDto findById(String selectedBookId) throws SQLException, ClassNotFoundException {
+        ResultSet rst = CrudUtil.executeCrud("select * from book where BOOK_ID=?", selectedBookId); if (rst.next()) { // Assuming the 5th column contains a serialized ArrayList of BookDetailsDto objects
+             Object object = rst.getObject(5);
+             ArrayList<BookDetailsDto> suppliers = null;
+             if (object instanceof ArrayList<?>) {
+                 suppliers = (ArrayList<BookDetailsDto>) object;
+             } else {
+                 suppliers = new ArrayList<>();
+             } return new BookDto(
+                     rst.getString(2),
+                        rst.getString(3),
+                        rst.getDouble(4),
+                        suppliers );
+        } return null;
+
+        }
 }
