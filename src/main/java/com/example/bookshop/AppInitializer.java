@@ -1,6 +1,5 @@
 package com.example.bookshop;
 
-import com.example.bookshop.controller.PasswordController;
 import com.example.bookshop.utils.WindowUtil;
 import javafx.application.Application;
 import javafx.stage.Stage;

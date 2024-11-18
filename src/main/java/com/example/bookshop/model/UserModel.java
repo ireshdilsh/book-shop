@@ -11,10 +11,11 @@ import java.sql.SQLException;
 
 public class UserModel {
 
+    // user new account create
     public String createAccount(UserDto userDto) throws SQLException, ClassNotFoundException {
         String sql = "insert into user values (?,?,?)";
-        Boolean resp = CrudUtil.executeCrud(sql,userDto.getEmail(),userDto.getUsername(),userDto.getPassword());
-        return resp == Boolean.TRUE ? "Account created Successfully !" : "Somthing Went Wrong !";
+        Boolean resp = CrudUtil.executeCrud(sql, userDto.getEmail(),userDto.getUsername(),userDto.getPassword());
+        return resp == Boolean.TRUE ? "success" : "fail";
     }
 
     // user login validation

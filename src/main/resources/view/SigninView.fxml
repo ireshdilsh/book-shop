@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="499.0" prefWidth="517.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookshop.controller.SignAndDashboardController">
+<AnchorPane fx:id="mainPane" prefHeight="499.0" prefWidth="517.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookshop.controller.AuthController">
    <children>
       <AnchorPane layoutX="27.0" layoutY="26.0" prefHeight="439.0" prefWidth="458.0" style="-fx-background-color: #fff; -fx-border-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
          <children>

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="dashboardPane" prefHeight="638.0" prefWidth="875.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookshop.controller.SignAndDashboardController">
+<AnchorPane fx:id="dashboardPane" prefHeight="638.0" prefWidth="875.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookshop.controller.DashboardController">
     <children>
         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="616.0" prefWidth="847.0" style="-fx-background-color: #fff; -fx-border-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
             <children>
@@ -65,7 +65,7 @@
                         <JFXButton layoutX="31.0" layoutY="530.0" onAction="#gotoLogin" prefHeight="38.0" prefWidth="120.0" />
                     </children>
                 </AnchorPane>
-                <ImageView fitHeight="19.0" fitWidth="25.0" layoutX="821.0" layoutY="10.0" onMouseClicked="#closeDashboard" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="closeButtnforModel" fitHeight="19.0" fitWidth="25.0" layoutX="821.0" layoutY="10.0" onMouseClicked="#closeDashboard" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/close-image.png" />
                     </image>

@@ -1,14 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.bookshop.controller.modelsController.OrdersController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="550.0" prefWidth="664.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookshop.controller.modelsController.OrdersController">
+   <children>
+      <AnchorPane layoutX="86.0" layoutY="37.0" prefHeight="474.0" prefWidth="507.0" style="-fx-background-color: #fff; -fx-border-color: #fafafa; -fx-border-radius: 10; -fx-background-radius: 10;">
+         <children>
+            <ImageView fx:id="closeModelButton" fitHeight="19.0" fitWidth="28.0" layoutX="476.0" layoutY="14.0" onMouseClicked="#closeModel" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/close-image.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="28.0" layoutY="24.0" text="Place new orders">
+               <font>
+                  <Font name="Gabarito Regular" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="28.0" layoutY="50.0" text="to increase your sales.">
+               <font>
+                  <Font name="Gabarito Regular" size="22.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="27.0" fitWidth="27.0" layoutX="254.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/hand-image.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="27.0" fitWidth="27.0" layoutX="275.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/hand-image.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="23.0" layoutY="93.0" text="Enagage your shop order with this dashboard and makes sales everyday to your shop." textFill="#aeaeae">
+               <font>
+                  <Font name="Gabarito Regular" size="12.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="124.0" layoutY="378.0" onAction="#addNewOrder" prefHeight="40.0" prefWidth="260.0" style="-fx-background-color: #000; -fx-background-radius: 4; -fx-border-radius: 4;" text="Place order" textFill="WHITE">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <ComboBox fx:id="custComboTxt" layoutX="39.0" layoutY="178.0" prefHeight="40.0" prefWidth="206.0" promptText="select customer" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
+            <Label layoutX="39.0" layoutY="153.0" text="Select Customer">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="bookComboTxt" layoutX="263.0" layoutY="178.0" prefHeight="40.0" prefWidth="206.0" promptText="select book" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
+            <Label layoutX="263.0" layoutY="153.0" text="Select Book">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="329.0" layoutY="15.0" text=" Today :">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="dateTxt" layoutX="382.0" layoutY="15.0" text="2024-12-25">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="courierComboTxt" layoutX="38.0" layoutY="278.0" prefHeight="40.0" prefWidth="206.0" promptText="select courier" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
+            <Label layoutX="38.0" layoutY="253.0" text="Select Courier (Optional)">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="discountComboTxt" layoutX="262.0" layoutY="278.0" prefHeight="40.0" prefWidth="206.0" promptText="select discount" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
+            <Label layoutX="262.0" layoutY="253.0" text="Select Discount (Optional)">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

@@ -11,9 +11,9 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="584.0" prefWidth="883.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookshop.controller.MainController">
+<AnchorPane fx:id="mainPane" prefHeight="638.0" prefWidth="883.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bookshop.controller.MainController">
    <children>
-      <AnchorPane layoutX="5.0" layoutY="4.0" prefHeight="570.0" prefWidth="872.0" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #fafafa;">
+      <AnchorPane layoutX="5.0" layoutY="19.0" prefHeight="616.0" prefWidth="872.0" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #fafafa;">
          <children>
             <Label layoutX="34.0" layoutY="208.0" text="Escape into the world of literature at Novel Nook,">
                <font>

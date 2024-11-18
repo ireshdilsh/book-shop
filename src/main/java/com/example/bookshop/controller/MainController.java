@@ -1,6 +1,5 @@
 package com.example.bookshop.controller;
 
-import com.example.bookshop.model.UserModel;
 import com.example.bookshop.utils.WindowUtil;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
@@ -10,7 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -51,8 +49,6 @@ public class MainController implements Initializable {
             }
         });
     }
-
-    private final UserModel userModel = new UserModel();
 
     // fx encapsulate fields
     @FXML
