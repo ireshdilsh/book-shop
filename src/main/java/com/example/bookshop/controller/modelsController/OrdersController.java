@@ -2,13 +2,17 @@ package com.example.bookshop.controller.modelsController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class OrdersController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class OrdersController implements Initializable {
      @FXML
     private ComboBox<?> bookComboTxt;
 
@@ -38,4 +42,27 @@ public class OrdersController {
         stage.close();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+      try {
+          getAllDiscounts();
+          getAllCustomers();
+          getAllCourier();
+          getAllBook();
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+    }
+
+    private void getAllCustomers() {
+    }
+
+    private void getAllCourier() {
+    }
+
+    private void getAllBook() {
+    }
+
+    private void getAllDiscounts() {
+    }
 }
