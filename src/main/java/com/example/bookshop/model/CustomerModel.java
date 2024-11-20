@@ -5,6 +5,7 @@ import com.example.bookshop.utils.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CustomerModel {
     public String addNewCustomer(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
@@ -25,5 +26,22 @@ public class CustomerModel {
             );
         }
         return null;
+    }
+
+    public ArrayList<CustomerDto> getAllCustomers() throws SQLException, ClassNotFoundException {
+        String sql = "select Name,Address,Contact from customer";
+        ResultSet rst = CrudUtil.executeCrud(sql);
+
+        ArrayList<CustomerDto> customerDTOS = new ArrayList<>();
+
+        while (rst.next()) {
+            CustomerDto customerDTO = new CustomerDto(
+                    rst.getString(1),
+                    rst.getString(2),
+                    rst.getInt(3)
+            );
+            customerDTOS.add(customerDTO);
+        }
+        return customerDTOS;
     }
 }

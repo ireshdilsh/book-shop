@@ -74,7 +74,6 @@ public class AuthController {
             }else{
                 new Alert(javafx.scene.control.Alert.AlertType.ERROR,"Account Create Failed !").show();
             }
-
         }
     }
 

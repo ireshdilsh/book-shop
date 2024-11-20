@@ -3,6 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -63,6 +65,35 @@
                             </cursor>
                         </JFXButton>
                         <JFXButton layoutX="31.0" layoutY="530.0" onAction="#gotoLogin" prefHeight="38.0" prefWidth="120.0" />
+                      <ImageView fitHeight="46.0" fitWidth="78.0" layoutX="81.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@../images/logo.png" />
+                          </image>
+                      </ImageView>
+                  <AnchorPane layoutX="19.0" layoutY="30.0">
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/logo.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="49.0" text="Novel">
+                           <font>
+                              <Font name="Gabarito Regular" size="19.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="99.0" text="Nook" textFill="#ff4d00">
+                           <font>
+                              <Font name="Gabarito Regular" size="19.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="50.0" layoutY="23.0" text="Dashboard">
+                           <font>
+                              <Font name="Gabarito Regular" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                     </children>
                 </AnchorPane>
                 <ImageView fx:id="closeButtnforModel" fitHeight="19.0" fitWidth="25.0" layoutX="821.0" layoutY="10.0" onMouseClicked="#closeDashboard" pickOnBounds="true" preserveRatio="true">
@@ -72,11 +103,6 @@
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
-                </ImageView>
-                <ImageView fitHeight="46.0" fitWidth="78.0" layoutX="424.0" layoutY="418.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../images/logo.png" />
-                    </image>
                 </ImageView>
             <AnchorPane layoutX="204.0" layoutY="32.0" prefHeight="209.0" prefWidth="623.0" style="-fx-background-color: #f5f5f5; -fx-background-radius: 20; -fx-border-radius: 20;">
                <children>
@@ -120,6 +146,27 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="204.0" layoutY="278.0">
+               <children>
+                  <Label layoutX="11.0" layoutY="6.0" text="Recent Orders">
+                     <font>
+                        <Font name="Gabarito Regular" size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="38.0" fitWidth="22.0" layoutX="147.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/fire-image.png" />
+                     </image>
+                  </ImageView>
+                  <TableView fx:id="customerTable" layoutY="57.0" prefHeight="253.0" prefWidth="623.0" style="-fx-background-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
+                     <columns>
+                        <TableColumn fx:id="nameCol" prefWidth="236.79998779296875" text="C1" />
+                        <TableColumn fx:id="addressCol" minWidth="0.0" prefWidth="197.59994506835938" text="C2" />
+                        <TableColumn fx:id="contactCol" prefWidth="188.00004882812505" text="C1" />
+                     </columns>
+                  </TableView>
                </children>
             </AnchorPane>
             </children>

@@ -1,16 +1,29 @@
 package com.example.bookshop.controller;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
+import com.example.bookshop.dto.CustomerDto;
+import com.example.bookshop.dto.tm.CustomerTM;
+import com.example.bookshop.model.CustomerModel;
 import com.example.bookshop.utils.WindowUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class DashboardController {
+public class DashboardController implements Initializable {
 
     public AnchorPane dashboardPane;
     @FXML
@@ -88,5 +101,44 @@ public class DashboardController {
     public void openAddNewSupplierModel(ActionEvent actionEvent) throws IOException {
         new WindowUtil().getLikeModel(closeButtnforModel, "model_views/SupplierModelView");
     }
+
     // end dashboard model opens section
+
+   // table view
+   @FXML
+   private TableColumn<CustomerTM, String> addressCol;
+    @FXML
+    private TableColumn<CustomerTM, Integer> contactCol;
+    @FXML
+    private TableView<CustomerTM> customerTable;
+    @FXML
+    private TableColumn<CustomerTM, String> nameCol;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try{
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private final CustomerModel customerModel = new CustomerModel();
+
+    public void getAllCustomers() throws SQLException, ClassNotFoundException {
+        ArrayList<CustomerDto> customerDTOS = customerModel.getAllCustomers();
+
+        ObservableList<CustomerTM> customerTMS = FXCollections.observableArrayList();
+
+        for (CustomerDto customerDTO : customerDTOS) {
+            CustomerTM customerTM = new CustomerTM(
+                    customerDTO.getCustName(),
+                    customerDTO.getCustAddress(),
+                    customerDTO.getCustPhone()
+            );
+            customerTMS.add(customerTM);
+        }
+
+        customerTable.setItems(customerTMS);
+    }
 }

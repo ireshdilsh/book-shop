@@ -36,6 +36,7 @@ public class BookModel {
             );
 
             if (isBookSaved) {
+
                 boolean bookDesilasSaved = bookDetailsModel.saveBookDetailsList(bookDto.getBookDetailsDtos());
                 if (bookDesilasSaved) {
                     connection.commit();

@@ -5,6 +5,7 @@ module com.example.bookshop {
     requires javafx.graphics;
     requires static lombok;
     requires com.jfoenix;
+    requires java.mail;
 
     opens com.example.bookshop to javafx.fxml;
     opens com.example.bookshop.controller to javafx.fxml;

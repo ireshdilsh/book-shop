@@ -18,6 +18,9 @@
                <image>
                   <Image url="@../../images/close-image.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
             <Label layoutX="28.0" layoutY="24.0" text="Upload your book ">
                <font>

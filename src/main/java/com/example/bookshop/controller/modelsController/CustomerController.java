@@ -5,7 +5,6 @@ import com.example.bookshop.model.CustomerModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -17,7 +16,7 @@ public class CustomerController {
 
     private final CustomerModel customerModel = new CustomerModel();
 
-      @FXML
+    @FXML
     private TextField addressTxt;
 
     @FXML
@@ -61,4 +60,5 @@ public class CustomerController {
         Stage stage = (Stage) this.closeModelButton.getScene().getWindow();
         stage.close();
     }
+
 }

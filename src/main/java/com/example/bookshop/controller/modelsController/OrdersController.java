@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -75,6 +76,8 @@ public class OrdersController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        this.dateTxt.setText(LocalDate.now().toString());
 
         // ------------------------------------------------------//
         this.custComboTxt.setOnAction(event -> {
