@@ -26,7 +26,7 @@ public class AuthController {
     @FXML
     private TextField loginEmailTxt;
     @FXML
-    private PasswordField registerIUsernameTxt;
+    private TextField registerIUsernameTxt;
     @FXML
     private TextField registerEmailTxt;
     @FXML

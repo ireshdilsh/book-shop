@@ -58,11 +58,6 @@
                         <Font name="Gabarito Regular" size="13.0" />
                     </font>
                 </TextField>
-                <PasswordField fx:id="registerIUsernameTxt" layoutX="72.0" layoutY="196.0" prefHeight="46.0" prefWidth="314.0" promptText="Enter Password" style="-fx-padding: 0 10; -fx-background-color: #fafafa; -fx-border-radius: 4; -fx-background-radius: 4;">
-                    <font>
-                        <Font name="Gabarito Regular" size="13.0" />
-                    </font>
-                </PasswordField>
                 <Label layoutX="73.0" layoutY="177.0" text="Enter Username">
                     <font>
                         <Font name="Gabarito Regular" size="13.0" />
@@ -96,6 +91,11 @@
                   <Font name="Gabarito Regular" size="13.0" />
                </font>
             </Label>
+            <TextField fx:id="registerIUsernameTxt" layoutX="72.0" layoutY="197.0" prefHeight="46.0" prefWidth="314.0" promptText="Enter email address" style="-fx-padding: 0 10; -fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </TextField>
             </children>
         </AnchorPane>
     </children>

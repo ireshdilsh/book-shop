@@ -132,6 +132,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="58.0" layoutX="29.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/logo.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <JFXButton fx:id="signinButton" layoutX="44.0" layoutY="380.0" prefHeight="46.0" prefWidth="131.0" ripplerFill="#f7f7f7" style="-fx-background-color: #000; -fx-background-radius: 4; -fx-border-radius: 4;" text="Sign In" textFill="WHITE">
@@ -150,10 +155,5 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <ImageView fitHeight="38.0" fitWidth="58.0" layoutX="34.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/logo.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

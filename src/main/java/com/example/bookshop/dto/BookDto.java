@@ -14,6 +14,7 @@ public class BookDto {
     private String categoryName;
     private double price;
     private String suplierName;
+    private int qty;
     private ArrayList<BookDetailsDto> bookDetailsDtos;
 
     public BookDto(String string, String string1, double aDouble, ArrayList<BookDetailsDto> suppliers) {

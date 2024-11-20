@@ -42,6 +42,7 @@ public class MailUtil {
 
         while (true){
             if(confirmationNumber > 100000 && confirmationNumber < 1000000){
+                System.out.println(confirmationNumber);
                 return confirmationNumber;
             }
         }

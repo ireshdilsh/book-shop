@@ -64,7 +64,6 @@
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </JFXButton>
-                        <JFXButton layoutX="31.0" layoutY="530.0" onAction="#gotoLogin" prefHeight="38.0" prefWidth="120.0" />
                   <AnchorPane layoutX="19.0" layoutY="30.0">
                      <children>
                         <ImageView fitHeight="46.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
@@ -89,6 +88,21 @@
                         </Label>
                      </children>
                   </AnchorPane>
+                  <JFXButton layoutX="19.0" layoutY="528.0" onAction="#gotoLogin" prefHeight="41.0" prefWidth="144.0" ripplerFill="#fcfcfc" style="-fx-background-color: #fff; -fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #000;" text="Log Out">
+                     <font>
+                        <Font name="Gabarito Regular" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/logout-image.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                     </children>
                 </AnchorPane>
                 <ImageView fx:id="closeButtnforModel" fitHeight="19.0" fitWidth="25.0" layoutX="821.0" layoutY="10.0" onMouseClicked="#closeDashboard" pickOnBounds="true" preserveRatio="true">

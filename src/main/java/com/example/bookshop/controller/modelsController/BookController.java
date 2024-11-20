@@ -37,6 +37,9 @@ public class BookController implements Initializable {
     private ImageView closeModelButton;
 
     @FXML
+    private TextField qtxText;
+
+    @FXML
     private TextField priceTxt;
 
     @FXML
@@ -61,7 +64,7 @@ public class BookController implements Initializable {
                bookDetailsDtos.add(bookDetailsDto);
            }
 
-           BookDto bookDto = new BookDto(bookNameTxt.getText(), categoryDropdownTxt.getValue(),Double.parseDouble(priceTxt.getText()),supplierDropTxt.getValue(),bookDetailsDtos);
+           BookDto bookDto = new BookDto(bookNameTxt.getText(), categoryDropdownTxt.getValue(),Double.parseDouble(priceTxt.getText()),supplierDropTxt.getValue(),Integer.parseInt(qtxText.getText()),bookDetailsDtos);
            boolean resp = Boolean.parseBoolean(String.valueOf(bookModel.addNewBook(bookDto)));
 
            if (true) {
@@ -77,6 +80,8 @@ public class BookController implements Initializable {
         bookNameTxt.setText("");
         categoryDropdownTxt.getItems().clear();
         priceTxt.setText("");
+        supplierDropTxt.getItems().clear();
+        qtxText.setText("");
     }
 
     @FXML

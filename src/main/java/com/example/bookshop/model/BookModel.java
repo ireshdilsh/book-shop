@@ -31,8 +31,8 @@ public class BookModel {
         try {
             connection.setAutoCommit(false);
             boolean isBookSaved = CrudUtil.executeCrud(
-                    "insert into book(Name,CatName,Price,Supplier_Name) values (?,?,?,?)",
-                  bookDto.getBookName(),bookDto.getCategoryName(),bookDto.getPrice(),bookDto.getSuplierName()
+                    "insert into book(Name,CatName,Price,Supplier_Name,qty) values (?,?,?,?,?)",
+                  bookDto.getBookName(),bookDto.getCategoryName(),bookDto.getPrice(),bookDto.getSuplierName(),bookDto.getQty()
             );
 
             if (isBookSaved) {
