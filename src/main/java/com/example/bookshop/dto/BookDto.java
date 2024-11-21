@@ -16,11 +16,4 @@ public class BookDto {
     private String suplierName;
     private int qty;
     private ArrayList<BookDetailsDto> bookDetailsDtos;
-
-    public BookDto(String string, String string1, double aDouble, ArrayList<BookDetailsDto> suppliers) {
-        this.bookName = string;
-        this.categoryName = string1;
-        this.price = aDouble;
-        this.bookDetailsDtos = suppliers;
-    }
 }

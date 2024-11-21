@@ -91,27 +91,24 @@ public class OrdersController implements Initializable {
                 throw new RuntimeException(e);
             }
 
-            // If customer found (customerDTO not null)
             if (dto != null) {
                 customerLbl.setText(dto.getCustName());
             }
         });
 
         // ------------------------------------------------------//
-        this.bookComboTxt.setOnAction(event -> {
-            String selectedBookId = bookComboTxt.getSelectionModel().getSelectedItem();
-            BookDto dto = null;
-            try {
-                dto = bookModel.findById(selectedBookId);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            // If customer found (customerDTO not null)
-            if (dto != null) {
-                bookLbl.setText(dto.getBookName());
+       this.bookComboTxt.setOnAction(event -> {
+            int selectedBookId = Integer.parseInt(bookComboTxt.getSelectionModel().getSelectedItem());
+           ArrayList<String> bookDto = null;
+           try {
+               bookDto = bookModel.findById(String.valueOf(selectedBookId));
+           } catch (SQLException e) {
+               throw new RuntimeException(e);
+           } catch (ClassNotFoundException e) {
+               throw new RuntimeException(e);
+           }
+           if (bookDto != null) {
+                bookLbl.setText(bookDto.getLast());
             }
         });
         // ------------------------------------------------------//
@@ -127,7 +124,6 @@ public class OrdersController implements Initializable {
                 throw new RuntimeException(e);
             }
 
-            // If customer found (customerDTO not null)
             if (dto != null) {
                 discountLbl.setText(String.valueOf(dto.getAmount()));
             }
@@ -144,7 +140,6 @@ public class OrdersController implements Initializable {
                 throw new RuntimeException(e);
             }
 
-            // If customer found (customerDTO not null)
             if (dto != null) {
                 courierLbl.setText(dto.getName());
             }
@@ -188,5 +183,17 @@ public class OrdersController implements Initializable {
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(discount);
         discountComboTxt.setItems(observableList);
+    }
+
+    public void clearFields(){
+        discountComboTxt.getItems().clear();
+        custComboTxt.getItems().clear();
+        courierComboTxt.getItems().clear();
+        bookComboTxt.getItems().clear();
+        qtyTxt.setText("");
+        discountLbl.setText("");
+        customerLbl.setText("");
+        courierLbl.setText("");
+        bookLbl.setText("");
     }
 }

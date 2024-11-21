@@ -2,6 +2,8 @@ package com.example.bookshop.controller.modelsController;
 
 import com.example.bookshop.dto.BookDetailsDto;
 import com.example.bookshop.dto.BookDto;
+import com.example.bookshop.dto.CategoryDto;
+import com.example.bookshop.dto.SupplierDto;
 import com.example.bookshop.model.BookModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +20,8 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class BookController implements Initializable {
@@ -42,38 +46,56 @@ public class BookController implements Initializable {
     @FXML
     private TextField priceTxt;
 
+    private ObservableList<String> cateName;
+    private HashMap<String, Integer> cateMap;
+    private HashMap<String, Integer> supplierMap;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        cateName = FXCollections.observableArrayList();
+        cateMap = new HashMap<>();
+        supplierMap = new HashMap<>();
+
+        try {
+            getAllCategories();
+            getAllSupplier();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     void addNewBook(ActionEvent event) throws SQLException, ClassNotFoundException {
-       if (bookNameTxt.getText().isEmpty() && categoryDropdownTxt.getItems().isEmpty() && priceTxt.getText().isEmpty()) {
-           new Alert(Alert.AlertType.ERROR,"Cannot empty this fields.").show();
-       } else if (bookNameTxt.getText().isEmpty() || categoryDropdownTxt.getItems().isEmpty() || priceTxt.getText().isEmpty()) {
-           new Alert(Alert.AlertType.ERROR,"Cannot empty this fields.").show();
-       }else{
+        if (bookNameTxt.getText().isEmpty() || categoryDropdownTxt.getValue() == null || priceTxt.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Cannot leave any fields empty.").show();
+        } else {
+            ArrayList<BookDetailsDto> bookDetailsDtos = new ArrayList<>();
+            String selectedSupplier = supplierDropTxt.getValue();
+            Integer supplierId = supplierMap.get(selectedSupplier);
 
-           ArrayList<BookDetailsDto> bookDetailsDtos = new ArrayList<>();
+            if (supplierId == null) {
+                new Alert(Alert.AlertType.ERROR, "Invalid supplier selected.").show();
+                return;
+            }
 
-           // Collect data for each item in the cart and add to order details array
-           for (BookDetailsDto book : bookDetailsDtos) {
+            bookDetailsDtos.add(new BookDetailsDto(0, supplierId));
+            BookDto bookDto = new BookDto(
+                    bookNameTxt.getText(),
+                    categoryDropdownTxt.getValue(),
+                    Double.parseDouble(priceTxt.getText()),
+                    supplierDropTxt.getValue(),
+                    Integer.parseInt(qtxText.getText()),
+                    bookDetailsDtos
+            );
 
-               // Create order details for each cart item
-               BookDetailsDto bookDetailsDto = new BookDetailsDto(
-                    book.getBookID(),book.getSupplierID()
-               );
-
-               // Add to order details array
-               bookDetailsDtos.add(bookDetailsDto);
-           }
-
-           BookDto bookDto = new BookDto(bookNameTxt.getText(), categoryDropdownTxt.getValue(),Double.parseDouble(priceTxt.getText()),supplierDropTxt.getValue(),Integer.parseInt(qtxText.getText()),bookDetailsDtos);
-           boolean resp = Boolean.parseBoolean(String.valueOf(bookModel.addNewBook(bookDto)));
-
-           if (true) {
-               new Alert(Alert.AlertType.INFORMATION,"Book has been Successfully Saved !").show();
-               clearFields();
-           }else{
-               new Alert(Alert.AlertType.ERROR,"Something went Wrong!").show();
-           }
-       }
+            boolean resp = bookModel.addNewBook(bookDto);
+            if (resp) {
+                new Alert(Alert.AlertType.INFORMATION, "Book has been Successfully Saved!").show();
+                clearFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+            }
+        }
     }
 
     public void clearFields() {
@@ -90,27 +112,22 @@ public class BookController implements Initializable {
         stage.close();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-      try {
-          getAllCategories();
-          getAllSupplier();
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
-    }
-
     private void getAllSupplier() throws SQLException, ClassNotFoundException {
-        ArrayList<String> suppliers = bookModel.getAllSuppliers();
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(suppliers);
-        supplierDropTxt.setItems(observableList);
+        List<SupplierDto> suppliers = bookModel.getAllSuppliers();
+        ObservableList<String> supplierNames = FXCollections.observableArrayList();
+        for (SupplierDto supplier : suppliers) {
+            supplierNames.add(supplier.getSupplierName());
+            supplierMap.put(supplier.getSupplierName(), bookModel.getSupplierId());
+        }
+        supplierDropTxt.setItems(supplierNames);
     }
 
     private void getAllCategories() throws SQLException, ClassNotFoundException {
-        ArrayList<String> categories = bookModel.getAllCategories();
-        ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(categories);
-        categoryDropdownTxt.setItems(observableList);
+        List<CategoryDto> categories = bookModel.getAllCategories();
+        for (CategoryDto category : categories) {
+            cateName.add(category.getCategoryName());
+            cateMap.put(category.getCategoryName(), category.getCategoryId());
+        }
+        categoryDropdownTxt.setItems(cateName);
     }
 }
