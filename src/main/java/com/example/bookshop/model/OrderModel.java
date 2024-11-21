@@ -83,7 +83,7 @@ public class OrderModel {
         }
     }
 
-    private int saveOrder(Connection connection, OrderDto orderDto) throws SQLException {
+    private int saveOrder(Connection connection, OrderDto orderDto) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO orders (O_Date, custID, B_ID, Cou_ID, Dis_ID) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setDate(1, orderDto.getOrderDate());
@@ -101,10 +101,10 @@ public class OrderModel {
                 }
             }
         }
-        return -1;
+       return -1;
     }
 
-    private boolean saveOrderDetails(Connection connection, OrderDetails orderDetails) throws SQLException {
+    private boolean saveOrderDetails(Connection connection, OrderDetails orderDetails) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO order_details (book_id, o_id, Price, qty) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, orderDetails.getBookID());
@@ -114,9 +114,10 @@ public class OrderModel {
 
             return statement.executeUpdate() > 0;
         }
+
     }
 
-    private double getBookPrice(Connection connection, int bookID) throws SQLException {
+    private double getBookPrice(Connection connection, int bookID) throws SQLException, ClassNotFoundException {
         String sql = "SELECT Price FROM book WHERE BOOK_ID = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, bookID);
@@ -126,14 +127,14 @@ public class OrderModel {
             }
         }
         return 0.0;
+
     }
 
-    private boolean updateBookQty(Connection connection, int bookID, int quantity) throws SQLException {
+    private boolean updateBookQty(Connection connection, int bookID, int quantity) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE book SET qty = qty - ? WHERE BOOK_ID = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, quantity);
             statement.setInt(2, bookID);
-
             return statement.executeUpdate() > 0;
         }
     }
