@@ -1,15 +1,14 @@
 package com.example.bookshop.controller.modelsController;
 
-import com.example.bookshop.dto.BookDto;
-import com.example.bookshop.dto.CourierDto;
-import com.example.bookshop.dto.CustomerDto;
-import com.example.bookshop.dto.DiscountDto;
+import com.example.bookshop.dto.OrderDetails;
+import com.example.bookshop.dto.OrderDto;
 import com.example.bookshop.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class OrdersController implements Initializable {
 
     private final OrderModel orderModel = new OrderModel();
 
-     @FXML
+    @FXML
     private ComboBox<String> bookComboTxt;
 
     @FXML
@@ -48,7 +48,7 @@ public class OrdersController implements Initializable {
     @FXML
     private TextField qtyTxt;
 
-    // lables
+    // Labels
     @FXML
     private Label bookLbl;
     @FXML
@@ -60,7 +60,38 @@ public class OrdersController implements Initializable {
 
     @FXML
     void addNewOrder(ActionEvent event) {
+        try {
+            String selectedBookId = bookComboTxt.getSelectionModel().getSelectedItem();
+            String selectedCourierId = courierComboTxt.getSelectionModel().getSelectedItem();
+            String selectedCustomerId = custComboTxt.getSelectionModel().getSelectedItem();
+            String selectedDiscountId = discountComboTxt.getSelectionModel().getSelectedItem();
+            int qty = Integer.parseInt(qtyTxt.getText());
 
+            OrderDto orderDto = new OrderDto(
+                    Date.valueOf(LocalDate.now()),
+                    Integer.parseInt(selectedCustomerId),
+                    Integer.parseInt(selectedBookId),
+                    Integer.parseInt(selectedCourierId),
+                    Integer.parseInt(selectedDiscountId)
+            );
+
+            OrderDetails orderDetails = new OrderDetails(
+                    Integer.parseInt(selectedBookId),
+                    0, // Placeholder for order ID, to be set by the model
+                    0.0, // You would calculate the price here if needed
+                    qty
+            );
+
+            boolean success = orderModel.addOrder(orderDto, orderDetails);
+            if (success) {
+                new Alert(Alert.AlertType.INFORMATION, "Order has been successfully placed!").show();
+                clearFields();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -76,85 +107,16 @@ public class OrdersController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         this.dateTxt.setText(LocalDate.now().toString());
 
-        // ------------------------------------------------------//
-        this.custComboTxt.setOnAction(event -> {
-            String selectedCustomerId = custComboTxt.getSelectionModel().getSelectedItem();
-            CustomerDto dto = null;
-            try {
-                dto = customerModel.findById(selectedCustomerId);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (dto != null) {
-                customerLbl.setText(dto.getCustName());
-            }
-        });
-
-        // ------------------------------------------------------//
-       this.bookComboTxt.setOnAction(event -> {
-            int selectedBookId = Integer.parseInt(bookComboTxt.getSelectionModel().getSelectedItem());
-           ArrayList<String> bookDto = null;
-           try {
-               bookDto = bookModel.findById(String.valueOf(selectedBookId));
-           } catch (SQLException e) {
-               throw new RuntimeException(e);
-           } catch (ClassNotFoundException e) {
-               throw new RuntimeException(e);
-           }
-           if (bookDto != null) {
-                bookLbl.setText(bookDto.getLast());
-            }
-        });
-        // ------------------------------------------------------//
-
-        this.discountComboTxt.setOnAction(event -> {
-            String selectedDiscountId = discountComboTxt.getSelectionModel().getSelectedItem();
-            DiscountDto dto = null;
-            try {
-                dto = discountModel.findById(selectedDiscountId);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (dto != null) {
-                discountLbl.setText(String.valueOf(dto.getAmount()));
-            }
-        });
-        // ------------------------------------------------------//
-        this.courierComboTxt.setOnAction(event -> {
-            String selectedCourierId = courierComboTxt.getSelectionModel().getSelectedItem();
-            CourierDto dto = null;
-            try {
-                dto = courierModel.findById(selectedCourierId);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (dto != null) {
-                courierLbl.setText(dto.getName());
-            }
-        });
-        // ------------------------------------------------------//
-
-
         try {
-          getAllDiscounts();
-          getAllCustomers();
-          getAllCourier();
-          getAllBook();
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
+            getAllDiscounts();
+            getAllCustomers();
+            getAllCourier();
+            getAllBooks();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void getAllCustomers() throws SQLException, ClassNotFoundException {
@@ -171,21 +133,21 @@ public class OrdersController implements Initializable {
         courierComboTxt.setItems(observableList);
     }
 
-    private void getAllBook() throws SQLException, ClassNotFoundException {
-        ArrayList<String> book = orderModel.getAllBook();
+    private void getAllBooks() throws SQLException, ClassNotFoundException {
+        ArrayList<String> books = orderModel.getAllBooks();
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(book);
+        observableList.addAll(books);
         bookComboTxt.setItems(observableList);
     }
 
     private void getAllDiscounts() throws SQLException, ClassNotFoundException {
-        ArrayList<String> discount = orderModel.getAllDiscounts();
+        ArrayList<String> discounts = orderModel.getAllDiscounts();
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(discount);
+        observableList.addAll(discounts);
         discountComboTxt.setItems(observableList);
     }
 
-    public void clearFields(){
+    public void clearFields() {
         discountComboTxt.getItems().clear();
         custComboTxt.getItems().clear();
         courierComboTxt.getItems().clear();
