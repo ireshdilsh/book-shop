@@ -12,4 +12,5 @@ public class OrderDetails {
     private int orderID;
     private Double price;
     private int quantity;
+
 }
