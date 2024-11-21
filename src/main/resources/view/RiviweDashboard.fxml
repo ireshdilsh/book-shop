@@ -169,11 +169,10 @@
                         <Image url="@../images/fire-image.png" />
                      </image>
                   </ImageView>
-                  <TableView fx:id="customerTable" layoutY="57.0" prefHeight="253.0" prefWidth="623.0" style="-fx-background-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
+                  <TableView fx:id="riviewTable" layoutY="57.0" prefHeight="253.0" prefWidth="623.0" style="-fx-background-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
                      <columns>
-                        <TableColumn fx:id="nameCol" prefWidth="236.79998779296875" text="C1" />
-                        <TableColumn fx:id="addressCol" minWidth="0.0" prefWidth="197.59994506835938" text="C2" />
-                        <TableColumn fx:id="contactCol" prefWidth="188.00004882812505" text="C1" />
+                        <TableColumn fx:id="riviDiscription" minWidth="0.0" prefWidth="347.1999816894531" text="Discription" />
+                        <TableColumn fx:id="riviCustName" prefWidth="275.20000000000005" text="custName" />
                      </columns>
                   </TableView>
                </children>
