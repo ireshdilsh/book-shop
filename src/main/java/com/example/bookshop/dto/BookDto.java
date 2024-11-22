@@ -22,4 +22,11 @@ public class BookDto {
         this.categoryName = categoryName;
         this.price = price;
     }
+
+    public BookDto( String string1, double aDouble,String string2 , int anInt) {
+        this.categoryName = string1;
+        this.price = aDouble;
+        this.suplierName = string2;
+        this.qty = anInt;
+    }
 }

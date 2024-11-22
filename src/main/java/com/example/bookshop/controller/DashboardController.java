@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.example.bookshop.dto.BookDto;
+import com.example.bookshop.dto.CustomerDto;
+import com.example.bookshop.dto.EmployeeDto;
 import com.example.bookshop.dto.RiviewDto;
 import com.example.bookshop.dto.tm.CustomerTM;
 import com.example.bookshop.dto.tm.RiviewTM;
@@ -29,10 +32,63 @@ public class DashboardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             getAllBooks();
-            getAllRiviewsTable();
+            getAllCustomerName();
+            getAllBookName();
+            getEmployeeNames();
+            getSalaryAmount();
+            getPromotionType();
+           // getAllRiviewsTable();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //---------------------------------//
+        customerNameComboBox.setOnAction(event -> {
+            String name = customerNameComboBox.getSelectionModel().getSelectedItem();
+            CustomerDto customerDto = null;
+            try {
+                getAllCustomerName();
+                customerDto = customerModel.findByName(name);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+            if (customerDto != null){
+                addressLbl.setText(customerDto.getCustAddress());
+                contactLbl.setText(String.valueOf(customerDto.getCustPhone()));
+            }
+        });
+        //---------------------------------//
+        bookComboBox.setOnAction(event -> {
+            String name = bookComboBox.getSelectionModel().getSelectedItem();
+            BookDto bookDto = null;
+            try {
+                getAllBookName();
+                bookDto = bookModel.findByName(name);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+            if (bookDto != null){
+                categoryNameLbl.setText(bookDto.getCategoryName());
+                bookPriceLbl.setText(String.valueOf(bookDto.getPrice()));
+                supplierNameLbl.setText(bookDto.getSuplierName());
+                qtyText1.setText(String.valueOf(bookDto.getQty()));
+            }
+        });
+        //---------------------------------//
+        employeeComboBox.setOnAction(event -> {
+            String name = employeeComboBox.getSelectionModel().getSelectedItem();
+            EmployeeDto employeeDto = null;
+            try {
+                getEmployeeNames();
+                employeeDto = employeeModel.findByName(name);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (employeeDto != null){
+                ageLbl.setText(String.valueOf(employeeDto.getAge()));
+                empContactLbl.setText(String.valueOf(employeeDto.getContact()));
+            }
+        });
     }
 
     public AnchorPane dashboardPane;
@@ -42,8 +98,7 @@ public class DashboardController implements Initializable {
     private AnchorPane mainPane;
     @FXML
     private ImageView closeButtnforModel;
-    @FXML
-    private ImageView bookImageinBokkView;
+
 
     // -------------------------------------------------- //
     @FXML
@@ -73,7 +128,6 @@ public class DashboardController implements Initializable {
     }
 
     // -------------------------------------------------- //
-
 
     private final BookModel bookModel = new BookModel();
     private final OrderModel orderModel= new OrderModel();
@@ -191,4 +245,174 @@ public class DashboardController implements Initializable {
         observableList.addAll(books);
         updateComboBookName.setItems(observableList);
     }
+
+    @FXML
+    private Label addressLbl;
+
+    @FXML
+    private TextField addressTxt;
+    @FXML
+    private Label contactLbl;
+
+    @FXML
+    private TextField contactTxt;
+
+    @FXML
+    private ComboBox<String> customerNameComboBox = new ComboBox<>();
+    @FXML
+    private ComboBox<String> customerNameComboBox1 = new ComboBox<>();
+    @FXML
+    private ComboBox<String> customerNameComboBox2 = new ComboBox<>();
+
+    public void getAllCustomerName() throws SQLException, ClassNotFoundException {
+        ArrayList<String> customers = customerModel.getAllCustomerName();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(customers);
+        customerNameComboBox.setItems(observableList);
+        customerNameComboBox1.setItems(observableList);
+        customerNameComboBox2.setItems(observableList);
+    }
+
+    public void updateCustomer(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        CustomerDto customerDto = new CustomerDto(customerNameComboBox1.getSelectionModel().getSelectedItem(),
+                addressTxt.getText(),Integer.parseInt(contactTxt.getText()));
+        String resp = customerModel.updateCustomer(customerDto);
+
+        if (resp.equals("success")) {
+            new Alert(Alert.AlertType.INFORMATION,"Customer updated successfully.").show();
+            customerNameComboBox1.getItems().clear();
+            addressTxt.setText("");
+            contactTxt.setText("");
+        }else{
+            new Alert(Alert.AlertType.ERROR,"Something Went Wrong !").show();
+        }
+    }
+
+    public void deleteCustomer(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        String name = customerNameComboBox2.getSelectionModel().getSelectedItem();
+        String resp = customerModel.deleteCustomer(name);
+        if (resp.equals("success")) {
+            new Alert(Alert.AlertType.INFORMATION,"Customer deleted successfully.").show();
+            customerNameComboBox2.getItems().clear();
+            addressTxt.setText("");
+            contactTxt.setText("");
+            getAllCustomerName();
+        }else{
+            new Alert(Alert.AlertType.ERROR,"Something Went Wrong !").show();
+        }
+    }
+
+    //-------------------------------------------------//
+    @FXML
+    private ComboBox<String> bookComboBox = new ComboBox<>();
+    @FXML
+    private Label bookPriceLbl;
+    @FXML
+    private Label categoryNameLbl;
+    @FXML
+    private Label supplierNameLbl;
+    @FXML
+    private Label qtyText1;
+    @FXML
+    private ComboBox<String> bookComboBox2 = new ComboBox<>();
+    public void getAllBookName() throws SQLException, ClassNotFoundException {
+        ArrayList<String> books = customerModel.getAllBookName();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(books);
+        bookComboBox.setItems(observableList);
+        bookComboBox2.setItems(observableList);
+    }
+
+    public void deleteBook(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        String name = bookComboBox2.getSelectionModel().getSelectedItem();
+        String resp = bookModel.deleteBook(name);
+
+        if (resp.equals("success")) {
+            new Alert(Alert.AlertType.INFORMATION,"Book deleted successfully.").show();
+            bookComboBox2.getItems().clear();
+            getAllBookName();
+        }else{
+            new Alert(Alert.AlertType.ERROR,"Something Went Wrong !").show();
+        }
+    }
+
+    //-----------------------------------------------------//
+
+    @FXML
+    private Label ageLbl;
+    @FXML
+    private TextField empAgeTxt;
+    @FXML
+    private Label empContactLbl;
+    @FXML
+    private TextField empContactTxt;
+    @FXML
+    private ComboBox<String> empPromotionComboBox = new ComboBox<>();
+    @FXML
+    private ComboBox<String> empSalaryComboBox = new ComboBox<>();
+    @FXML
+    private ComboBox<String> employeeComboBox = new ComboBox<>();
+    @FXML
+    private ComboBox<String> employeeComboBox1 = new ComboBox<>();
+
+    public void getEmployeeNames() throws SQLException, ClassNotFoundException {
+        ArrayList<String> names = employeeModel.getAllEmployeeName();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(names);
+        employeeComboBox.setItems(observableList);
+        employeeComboBox1.setItems(observableList);
+    }
+
+    public void getSalaryAmount() throws SQLException, ClassNotFoundException {
+        ArrayList<String> salaries = employeeModel.getAllSalaries();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(salaries);
+        empSalaryComboBox.setItems(observableList);
+    }
+
+    public void getPromotionType() throws SQLException, ClassNotFoundException {
+        ArrayList<String> promos = employeeModel.getAllPromotions();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(promos);
+        empPromotionComboBox.setItems(observableList);
+    }
+
+    public void updateEmployee(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        EmployeeDto employeeDto = new EmployeeDto(
+                employeeComboBox1.getSelectionModel().getSelectedItem(),
+                Integer.parseInt( empContactTxt.getText()),
+                Integer.parseInt(empAgeTxt.getText()),
+                empPromotionComboBox.getSelectionModel().getSelectedIndex()+1,
+                empSalaryComboBox.getSelectionModel().getSelectedIndex()+1
+        );
+
+        String resp = employeeModel.updateEmployee(employeeDto);
+        if (resp.equals("success")){
+            new Alert(Alert.AlertType.INFORMATION,"Employee Update Sucessful.").show();
+            empPromotionComboBox.getItems().clear();
+            empAgeTxt.setText("");
+            empContactTxt.setText("");
+            employeeComboBox1.getItems().clear();
+            empSalaryComboBox.getItems().clear();
+            getEmployeeNames();
+        }else{
+            new Alert(Alert.AlertType.ERROR,"Something went Wrong.").show();
+        }
+    }
+
+    public void deleteEmployee(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        String name = employeeComboBox1.getSelectionModel().getSelectedItem();
+        String resp = employeeModel.deleteEmployee(name);
+
+        if (resp.equals("success")) {
+            new Alert(Alert.AlertType.INFORMATION,"Employee deleted successfully.").show();
+            employeeComboBox1.getItems().clear();
+            getEmployeeNames();
+        }else{
+            new Alert(Alert.AlertType.ERROR,"Something Went Wrong !").show();
+        }
+    }
+
+    //-----------------------------------------------------//
+
 }

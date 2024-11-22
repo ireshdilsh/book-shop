@@ -45,5 +45,48 @@ public class CustomerModel {
         return customerDTOS;
     }
 
+    public ArrayList<String> getAllCustomerName() throws SQLException, ClassNotFoundException {
+        String sql = "select Name from customer";
+        ArrayList<String> customerName = new ArrayList<>();
+        ResultSet resultSet = CrudUtil.executeCrud(sql);
 
+        while (resultSet.next()) {
+            customerName.add(resultSet.getString(1));
+        }
+        return customerName;
+    }
+
+    public CustomerDto findByName(String name) throws SQLException, ClassNotFoundException {
+        String sql = "select Address,Contact from customer where Name = ? ";
+        ResultSet resultSet = CrudUtil.executeCrud(sql,name);
+
+        if (resultSet.next()) {
+            return new CustomerDto(
+              resultSet.getString(1),resultSet.getInt(2)
+            );
+        }
+        return null;
+    }
+    public String updateCustomer(CustomerDto customerDto) throws SQLException, ClassNotFoundException {
+        String sql = "update customer set Address = ? , Contact = ? where Name = ?";
+        Boolean resp = CrudUtil.executeCrud(sql,customerDto.getCustAddress(),customerDto.getCustPhone(),customerDto.getCustName());
+        return resp == Boolean.TRUE ? "success" : "error";
+    }
+
+    public String deleteCustomer(String name) throws SQLException, ClassNotFoundException {
+        String sql = "delete from customer where Name = ?";
+        Boolean resp = CrudUtil.executeCrud(sql,name);
+        return resp == Boolean.TRUE ? "success" : "error";
+    }
+
+    public ArrayList<String> getAllBookName() throws SQLException, ClassNotFoundException {
+        String sql = "select Name from book";
+        ArrayList<String> bookName = new ArrayList<>();
+        ResultSet resultSet = CrudUtil.executeCrud(sql);
+
+        while (resultSet.next()) {
+            bookName.add(resultSet.getString(1));
+        }
+        return bookName;
+    }
 }

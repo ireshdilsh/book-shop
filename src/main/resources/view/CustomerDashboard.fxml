@@ -2,9 +2,9 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -159,25 +159,93 @@
             </AnchorPane>
             <AnchorPane layoutX="204.0" layoutY="278.0">
                <children>
-                  <Label layoutX="11.0" layoutY="6.0" text="Recent Customers">
+                  <Label layoutX="11.0" layoutY="6.0" text="Find Customers">
                      <font>
                         <Font name="Gabarito Regular" size="20.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="38.0" fitWidth="22.0" layoutX="180.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="38.0" fitWidth="22.0" layoutX="158.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/fire-image.png" />
                      </image>
                   </ImageView>
-                  <TableView fx:id="customerTable" layoutY="57.0" prefHeight="253.0" prefWidth="623.0" style="-fx-background-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
-                    <columns>
-                      <TableColumn fx:id="nameCol" prefWidth="236.79998779296875" text="C1" />
-                      <TableColumn fx:id="addressCol" minWidth="0.0" prefWidth="197.59994506835938" text="C2" />
-                        <TableColumn fx:id="contactCol" prefWidth="188.00004882812505" text="C1" />
-                    </columns>
-                  </TableView>
                </children>
             </AnchorPane>
+            <ComboBox fx:id="customerNameComboBox" layoutX="219.0" layoutY="357.0" prefHeight="38.0" prefWidth="218.0" promptText="select customer" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
+            <Label layoutX="212.0" layoutY="332.0" text="Customer Name">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="461.0" layoutY="332.0" text="Address">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="670.0" layoutY="332.0" text="Contact">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="addressLbl" layoutX="467.0" layoutY="361.0" prefHeight="30.0" prefWidth="167.0">
+               <font>
+                  <Font name="Gabarito Regular" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="contactLbl" layoutX="672.0" layoutY="361.0" prefHeight="30.0" prefWidth="154.0">
+               <font>
+                  <Font name="Gabarito Regular" size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="customerNameComboBox1" layoutX="222.0" layoutY="491.0" prefHeight="38.0" prefWidth="218.0" promptText="select customer" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
+            <Label layoutX="215.0" layoutY="466.0" text="Customer Name">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="458.0" layoutY="466.0" text="Address">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="653.0" layoutY="466.0" text="Contact">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="686.0" layoutY="550.0" onAction="#updateCustomer" prefHeight="38.0" prefWidth="144.0" style="-fx-background-color: #000; -fx-background-radius: 10; -fx-border-radius: 10;" text="Update Customer" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="528.0" layoutY="550.0" onAction="#deleteCustomer" prefHeight="38.0" prefWidth="144.0" ripplerFill="#efefef" style="-fx-background-color: #fff; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #000;" text="Delete Customer">
+               <font>
+                  <Font name="Segoe UI Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <TextField fx:id="addressTxt" layoutX="459.0" layoutY="491.0" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
+            <TextField fx:id="contactTxt" layoutX="655.0" layoutY="491.0" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
+            <AnchorPane layoutX="204.0" layoutY="422.0">
+               <children>
+                  <Label layoutX="11.0" layoutY="6.0" text="Update Customer">
+                     <font>
+                        <Font name="Gabarito Regular" size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="38.0" fitWidth="22.0" layoutX="178.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/fire-image.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <ComboBox fx:id="customerNameComboBox2" layoutX="222.0" layoutY="550.0" prefHeight="38.0" prefWidth="218.0" promptText="select customer for delete" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
             </children>
         </AnchorPane>
       <ImageView fitHeight="24.0" fitWidth="33.0" layoutX="103.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">

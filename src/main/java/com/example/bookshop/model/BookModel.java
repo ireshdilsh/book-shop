@@ -147,4 +147,26 @@ public class BookModel {
         }
         return 0; // Return 0 if the book is not found
     }
+
+    public BookDto findByName(String name) throws SQLException, ClassNotFoundException {
+        String sql = "select CatName,Price,Supplier_Name,qty from book where Name = ?";
+        ResultSet resultSet = CrudUtil.executeCrud(sql,name);
+        ArrayList<BookDto>bookDtos = new ArrayList<>();
+
+        while (resultSet.next()){
+            return new BookDto(
+                    resultSet.getString(1),
+                    resultSet.getDouble(2),
+                    resultSet.getString(3),
+                    resultSet.getInt(4)
+            );
+        }
+        return null;
+    }
+
+    public String deleteBook(String name) throws SQLException, ClassNotFoundException {
+        String sql = "delete from book where Name = ?";
+        Boolean resp = CrudUtil.executeCrud(sql,name);
+        return resp == Boolean.TRUE ? "success" : "fail";
+    }
 }

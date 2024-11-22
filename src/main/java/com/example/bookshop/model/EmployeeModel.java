@@ -38,4 +38,39 @@ public class EmployeeModel {
         Boolean resp = CrudUtil.executeCrud(sql,employeeDto.getEmpName(),employeeDto.getContact(),employeeDto.getAge(),employeeDto.getPromotion(),employeeDto.getSalary());
         return resp == Boolean.TRUE ? "success" : "error";
     }
+
+    public ArrayList<String> getAllEmployeeName() throws SQLException, ClassNotFoundException {
+        String sql = "select Name from employee";
+        ResultSet resultSet = CrudUtil.executeCrud(sql);
+        ArrayList<String> employeeName = new ArrayList<>();
+
+        while (resultSet.next()) {
+            employeeName.add(resultSet.getString(1));
+        }
+        return employeeName;
+    }
+
+    public String deleteEmployee(String name) throws SQLException, ClassNotFoundException {
+        String sql = "delete from employee where Name = ?";
+        Boolean resp = CrudUtil.executeCrud(sql,name);
+        return resp == Boolean.TRUE ? "success" : "fail";
+    }
+
+    public EmployeeDto findByName(String name) throws SQLException, ClassNotFoundException {
+        String sql = "select Age,Contact from employee where Name = ?";
+        ResultSet resultSet = CrudUtil.executeCrud(sql,name);
+
+        if (resultSet.next()){
+            return new EmployeeDto(
+              resultSet.getInt(1),resultSet.getInt(2)
+            );
+        }
+        return null;
+    }
+
+    public String updateEmployee(EmployeeDto employeeDto) throws SQLException, ClassNotFoundException {
+        String sql = "update employee set Contact = ? ,Age = ?, PRO_ID = ?, SAL_ID = ? where Name = ?";
+        Boolean resp = CrudUtil.executeCrud(sql,employeeDto.getContact(),employeeDto.getAge(),employeeDto.getPromotion(),employeeDto.getSalary(),employeeDto.getEmpName());
+        return resp == Boolean.TRUE ? "success" : "fail";
+    }
 }

@@ -13,4 +13,9 @@ public class EmployeeDto {
     private int age;
     private int promotion;
     private int salary;
+
+    public EmployeeDto(int anInt, int anInt1) {
+        this.age = anInt;
+        this.contact = anInt1;
+    }
 }
