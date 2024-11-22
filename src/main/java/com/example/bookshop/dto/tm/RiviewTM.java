@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class RiviewTM {
-    private String Discription;
     private String custName;
+    private String discription;
 }

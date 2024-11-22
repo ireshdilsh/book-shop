@@ -171,8 +171,8 @@
                   </ImageView>
                   <TableView fx:id="riviewTable" layoutY="57.0" prefHeight="253.0" prefWidth="623.0" style="-fx-background-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
                      <columns>
-                        <TableColumn fx:id="riviDiscription" minWidth="0.0" prefWidth="347.1999816894531" text="Discription" />
-                        <TableColumn fx:id="riviCustName" prefWidth="275.20000000000005" text="custName" />
+                        <TableColumn fx:id="custName" minWidth="0.0" prefWidth="182.39996337890625" text="Customer Name" />
+                        <TableColumn fx:id="discription" prefWidth="439.9999694824219" text="Riview" />
                      </columns>
                   </TableView>
                </children>

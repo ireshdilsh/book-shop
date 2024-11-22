@@ -30,4 +30,18 @@ public class RiviewModel {
             e.printStackTrace();
         } return riviews;
     }
+
+    public ArrayList<RiviewDto> getAllRiviewsTable() throws SQLException, ClassNotFoundException {
+        String sql = "select Discription,custName from riview";
+        ResultSet resultSet = CrudUtil.executeCrud(sql);
+        ArrayList<RiviewDto> riviews = new ArrayList<>();
+
+        while (resultSet.next()) {
+               RiviewDto riviewDto = new RiviewDto(
+                     resultSet.getString(2),resultSet.getString(1)
+               );
+               riviews.add(riviewDto);
+        }
+        return riviews;
+    }
 }

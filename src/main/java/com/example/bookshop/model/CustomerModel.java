@@ -1,6 +1,7 @@
 package com.example.bookshop.model;
 
 import com.example.bookshop.dto.CustomerDto;
+import com.example.bookshop.dto.RiviewDto;
 import com.example.bookshop.utils.CrudUtil;
 
 import java.sql.ResultSet;
@@ -43,4 +44,6 @@ public class CustomerModel {
         }
         return customerDTOS;
     }
+
+
 }

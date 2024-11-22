@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.example.bookshop.dto.RiviewDto;
 import com.example.bookshop.dto.tm.CustomerTM;
+import com.example.bookshop.dto.tm.RiviewTM;
 import com.example.bookshop.model.*;
 import com.example.bookshop.utils.WindowUtil;
 import javafx.collections.FXCollections;
@@ -15,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +29,7 @@ public class DashboardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             getAllBooks();
+            getAllRiviewsTable();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,6 +44,36 @@ public class DashboardController implements Initializable {
     private ImageView closeButtnforModel;
     @FXML
     private ImageView bookImageinBokkView;
+
+    // -------------------------------------------------- //
+    @FXML
+    private TableColumn<RiviewTM, String> discription ;
+    @FXML
+    private TableView<RiviewTM> riviewTable ;
+    @FXML
+    private TableColumn<RiviewTM, String> custName;
+
+    public void getAllRiviewsTable() throws SQLException, ClassNotFoundException {
+
+        custName.setCellValueFactory(new PropertyValueFactory<>("custName"));
+        discription.setCellValueFactory(new PropertyValueFactory<>("discription"));
+
+        ArrayList<RiviewDto> riviewDtos = riviewModel.getAllRiviewsTable();
+
+        ObservableList<RiviewTM> riviewTMS = FXCollections.observableArrayList();
+
+        for (RiviewDto riviewDto : riviewDtos) {
+            RiviewTM riviewTM = new RiviewTM(
+                riviewDto.getCustName(),riviewDto.getDiscription()
+            );
+            riviewTMS.add(riviewTM);
+        }
+
+        riviewTable.setItems(riviewTMS);
+    }
+
+    // -------------------------------------------------- //
+
 
     private final BookModel bookModel = new BookModel();
     private final OrderModel orderModel= new OrderModel();
@@ -121,7 +155,7 @@ public class DashboardController implements Initializable {
     // end dashboard model opens section
 
     @FXML
-    private ComboBox<String> updateComboBookName;
+    private ComboBox<String> updateComboBookName = new ComboBox<>();
 
     @FXML
     private TextField updateQTYText;

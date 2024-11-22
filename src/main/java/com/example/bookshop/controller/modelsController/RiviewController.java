@@ -1,5 +1,6 @@
 package com.example.bookshop.controller.modelsController;
 
+import com.example.bookshop.controller.DashboardController;
 import com.example.bookshop.dto.RiviewDto;
 import com.example.bookshop.model.RiviewModel;
 import javafx.event.ActionEvent;
