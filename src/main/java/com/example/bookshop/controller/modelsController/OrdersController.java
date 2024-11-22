@@ -1,7 +1,6 @@
 package com.example.bookshop.controller.modelsController;
 
-import com.example.bookshop.dto.OrderDetails;
-import com.example.bookshop.dto.OrderDto;
+import com.example.bookshop.dto.*;
 import com.example.bookshop.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +25,8 @@ import java.util.ResourceBundle;
 public class OrdersController implements Initializable {
 
     private final OrderModel orderModel = new OrderModel();
+    @FXML
+    private Label priceTag;
 
     @FXML
     private ComboBox<String> bookComboTxt;
@@ -61,12 +62,51 @@ public class OrdersController implements Initializable {
     @FXML
     void addNewOrder(ActionEvent event) {
         try {
+            // Retrieve selected values from the UI
             String selectedBookId = bookComboTxt.getSelectionModel().getSelectedItem();
             String selectedCourierId = courierComboTxt.getSelectionModel().getSelectedItem();
             String selectedCustomerId = custComboTxt.getSelectionModel().getSelectedItem();
             String selectedDiscountId = discountComboTxt.getSelectionModel().getSelectedItem();
-            int qty = Integer.parseInt(qtyTxt.getText());
 
+            // Check if selections are made
+            if (selectedBookId == null) {
+                new Alert(Alert.AlertType.ERROR, "Please select a book.").show();
+                return;
+            }
+            if (selectedCourierId == null) {
+                new Alert(Alert.AlertType.ERROR, "Please select a courier.").show();
+                return;
+            }
+            if (selectedCustomerId == null) {
+                new Alert(Alert.AlertType.ERROR, "Please select a customer.").show();
+                return;
+            }
+            if (selectedDiscountId == null) {
+                new Alert(Alert.AlertType.ERROR, "Please select a discount.").show();
+                return;
+            }
+
+            // Validate quantity input
+            int qty;
+            try {
+                qty = Integer.parseInt(qtyTxt.getText().trim());
+                if (qty <= 0) {
+                    new Alert(Alert.AlertType.ERROR, "Quantity must be greater than zero.").show();
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                new Alert(Alert.AlertType.ERROR, "Please enter a valid number for quantity.").show();
+                return;
+            }
+
+            // Check available quantity in stock
+            int availableQty = bookModel.getAvailableQuantity(Integer.parseInt(selectedBookId));
+            if (qty > availableQty) {
+                new Alert(Alert.AlertType.ERROR, "Insufficient stock! Available quantity: " + availableQty).show();
+                return;
+            }
+
+            // Create OrderDto and OrderDetails objects
             OrderDto orderDto = new OrderDto(
                     Date.valueOf(LocalDate.now()),
                     Integer.parseInt(selectedCustomerId),
@@ -78,19 +118,22 @@ public class OrdersController implements Initializable {
             OrderDetails orderDetails = new OrderDetails(
                     Integer.parseInt(selectedBookId),
                     0, // Placeholder for order ID, to be set by the model
-                    0.0, // You would calculate the price here if needed
+                    0.0, // Price will be calculated in the model
                     qty
             );
 
+            // Attempt to add the order
             boolean success = orderModel.addOrder(orderDto, orderDetails);
             if (success) {
-                new Alert(Alert.AlertType.INFORMATION, "Order has been successfully placed!").show();
+                // Display the final price after discount
+                new Alert(Alert.AlertType.INFORMATION, "Order has been successfully placed! Your Payment is (with Discount): $" + orderDetails.getPrice()).show();
                 clearFields();
             } else {
                 new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
             }
         } catch (Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "An error occurred while placing the order.").show();
         }
     }
 
@@ -108,6 +151,55 @@ public class OrdersController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.dateTxt.setText(LocalDate.now().toString());
+
+        // Add action listeners for combo boxes
+        this.custComboTxt.setOnAction(event -> {
+            int custID = Integer.parseInt(custComboTxt.getSelectionModel().getSelectedItem());
+            try {
+                CustomerDto customerDto = customerModel.findById(String.valueOf(custID));
+                if (customerDto != null){
+                    customerLbl.setText(customerDto.getCustName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        this.bookComboTxt.setOnAction(event -> {
+            int bookID = Integer.parseInt(bookComboTxt.getSelectionModel().getSelectedItem());
+            try {
+                BookDto bookDto = bookModel.findById(String.valueOf(bookID));
+                if (bookDto != null){
+                    bookLbl.setText(bookDto.getBookName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        this.discountComboTxt.setOnAction(event -> {
+            int discountID = Integer.parseInt(discountComboTxt.getSelectionModel().getSelectedItem());
+            try {
+                DiscountDto discountDto = discountModel.findById(String.valueOf(discountID));
+                if (discountDto != null){
+                    discountLbl.setText(String.valueOf(discountDto.getAmount()));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        this.courierComboTxt.setOnAction(event -> {
+            int courierID = Integer.parseInt(courierComboTxt.getSelectionModel().getSelectedItem());
+            try {
+                CourierDto courierDto = courierModel.findById(String.valueOf(courierID));
+                if (courierDto != null){
+                    courierLbl.setText(courierDto.getName());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         try {
             getAllDiscounts();
@@ -158,4 +250,6 @@ public class OrdersController implements Initializable {
         courierLbl.setText("");
         bookLbl.setText("");
     }
+
+
 }

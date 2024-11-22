@@ -1,10 +1,7 @@
 package com.example.bookshop.model;
 
 import com.example.bookshop.db.DBConnection;
-import com.example.bookshop.dto.BookDetailsDto;
-import com.example.bookshop.dto.BookDto;
-import com.example.bookshop.dto.CategoryDto;
-import com.example.bookshop.dto.SupplierDto;
+import com.example.bookshop.dto.*;
 import com.example.bookshop.utils.CrudUtil;
 
 import java.sql.Connection;
@@ -105,15 +102,49 @@ public class BookModel {
         return -1;
     }
 
-    public ArrayList<String> findById(String selectedBookId) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT Name FROM book WHERE BOOK_ID = ?";
+    public BookDto findById(String selectedBookId) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT * FROM book WHERE BOOK_ID = ?";
         ResultSet resultSet = CrudUtil.executeCrud(sql,selectedBookId);
 
-        ArrayList<String> books = new ArrayList<>();
-
-        while (resultSet.next()) {
-            books.add(resultSet.getString(1));
+        if (resultSet.next()) {
+            return new BookDto(
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDouble(4)
+            );
         }
-        return books;
+        return null;
+    }
+
+    public ArrayList<String> getAllBooks() throws SQLException, ClassNotFoundException {
+        String sql = "select Name from book";
+        ResultSet resultSet = CrudUtil.executeCrud(sql);
+
+        ArrayList<String>names = new ArrayList<>();
+
+        while (resultSet.next()){
+            names.add(resultSet.getString(1));
+        }
+        return names;
+    }
+
+    public String updateBookQty(int qty, String bookName) throws SQLException, ClassNotFoundException {
+        String sql = "update book set qty = qty + ? where Name = ?";
+        Boolean resp = CrudUtil.executeCrud(sql,qty,bookName);
+        return resp == Boolean.TRUE ? "success" : "fail";
+    }
+
+    // In BookModel.java
+    public int getAvailableQuantity(int bookID) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT qty FROM book WHERE BOOK_ID = ?";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, bookID);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("qty");
+            }
+        }
+        return 0; // Return 0 if the book is not found
     }
 }

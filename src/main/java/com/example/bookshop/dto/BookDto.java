@@ -16,4 +16,10 @@ public class BookDto {
     private String suplierName;
     private int qty;
     private ArrayList<BookDetailsDto> bookDetailsDtos;
+
+    public BookDto(String bookName, String categoryName, double price ){
+        this.bookName = bookName;
+        this.categoryName = categoryName;
+        this.price = price;
+    }
 }

@@ -54,6 +54,35 @@ public class OrderModel {
         return couriers;
     }
 
+//    public boolean addOrder(OrderDto orderDto, OrderDetails orderDetails) throws SQLException, ClassNotFoundException {
+//        Connection connection = DBConnection.getInstance().getConnection();
+//        try {
+//            connection.setAutoCommit(false);
+//
+//            int orderId = saveOrder(connection, orderDto);
+//            if (orderId > 0) {
+//                orderDetails.setOrderID(orderId);
+//
+//                double pricePerUnit = getBookPrice(connection, orderDetails.getBookID());
+//                orderDetails.setPrice(pricePerUnit * orderDetails.getQuantity());
+//
+//                if (!saveOrderDetails(connection, orderDetails) || !updateBookQty(connection, orderDetails.getBookID(), orderDetails.getQuantity())) {
+//                    connection.rollback();
+//                    return false;
+//                }
+//                connection.commit();
+//                return true;
+//            }
+//            connection.rollback();
+//            return false;
+//        } catch (SQLException e) {
+//            connection.rollback();
+//            throw e;
+//        } finally {
+//            connection.setAutoCommit(true);
+//        }
+//    }
+
     public boolean addOrder(OrderDto orderDto, OrderDetails orderDetails) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getInstance().getConnection();
         try {
@@ -63,9 +92,18 @@ public class OrderModel {
             if (orderId > 0) {
                 orderDetails.setOrderID(orderId);
 
+                // Get the price per unit of the book
                 double pricePerUnit = getBookPrice(connection, orderDetails.getBookID());
                 orderDetails.setPrice(pricePerUnit * orderDetails.getQuantity());
 
+                // Get the discount amount based on the selected discount ID
+                double discountAmount = getDiscountAmount(connection, orderDto.getDIS_ID());
+                double finalPrice = orderDetails.getPrice() - discountAmount;
+
+                // Set the final price after applying the discount
+                orderDetails.setPrice(finalPrice);
+
+                // Save order details and update book quantity
                 if (!saveOrderDetails(connection, orderDetails) || !updateBookQty(connection, orderDetails.getBookID(), orderDetails.getQuantity())) {
                     connection.rollback();
                     return false;
@@ -117,7 +155,7 @@ public class OrderModel {
 
     }
 
-    private double getBookPrice(Connection connection, int bookID) throws SQLException, ClassNotFoundException {
+    public double getBookPrice(Connection connection, int bookID) throws SQLException, ClassNotFoundException {
         String sql = "SELECT Price FROM book WHERE BOOK_ID = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, bookID);
@@ -137,5 +175,17 @@ public class OrderModel {
             statement.setInt(2, bookID);
             return statement.executeUpdate() > 0;
         }
+    }
+
+    private double getDiscountAmount(Connection connection, int discountId) throws SQLException {
+        String sql = "SELECT Amount FROM discount WHERE DIS_ID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, discountId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getDouble("Amount");
+            }
+        }
+        return 0.0; // Return 0 if no discount found
     }
 }

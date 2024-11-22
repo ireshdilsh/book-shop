@@ -19,7 +19,6 @@ public class CustomerModel {
 
         if (rst.next()) {
             return new CustomerDto(
-                //    rst.getInt(1),  // Customer ID
                     rst.getString(2),
                     rst.getString(3),
                     rst.getInt(4)

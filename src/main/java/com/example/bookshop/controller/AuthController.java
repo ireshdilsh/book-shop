@@ -65,12 +65,12 @@ public class AuthController {
         } else if (registerPasswordTxt.getText().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Cannot be empty Password field").show();
         } else {
-          
             UserDto userDto = new UserDto(registerEmailTxt.getText(), registerIUsernameTxt.getText(), registerPasswordTxt.getText());
             String resp = userModel.createAccount(userDto);
             if (resp.equals("success")) {
                 new Alert(javafx.scene.control.Alert.AlertType.INFORMATION,"Account Created Successfully !").show();
                 clearTextFields();
+                new WindowUtil().navigateTo(mainPane,"SigninView");
             }else{
                 new Alert(javafx.scene.control.Alert.AlertType.ERROR,"Account Create Failed !").show();
             }

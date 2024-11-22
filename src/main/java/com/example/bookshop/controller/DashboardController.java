@@ -2,22 +2,34 @@ package com.example.bookshop.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.example.bookshop.dto.tm.CustomerTM;
-import com.example.bookshop.model.CustomerModel;
+import com.example.bookshop.model.*;
 import com.example.bookshop.utils.WindowUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class DashboardController implements Initializable {
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            getAllBooks();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public AnchorPane dashboardPane;
     @FXML
@@ -28,6 +40,13 @@ public class DashboardController implements Initializable {
     private ImageView closeButtnforModel;
     @FXML
     private ImageView bookImageinBokkView;
+
+    private final BookModel bookModel = new BookModel();
+    private final OrderModel orderModel= new OrderModel();
+    private final CustomerModel customerModel = new CustomerModel();
+    private final EmployeeModel employeeModel = new EmployeeModel();
+    private final RiviewModel riviewModel = new RiviewModel();
+    private final SupplierModel supplierModel = new SupplierModel();
 
     public void closeWindow(MouseEvent mouseEvent) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
@@ -96,23 +115,46 @@ public class DashboardController implements Initializable {
         new WindowUtil().getLikeModel(closeButtnforModel, "model_views/SupplierModelView");
     }
 
+    public void openBookUpdateModel(ActionEvent actionEvent) throws IOException {
+        new WindowUtil().getLikeModel(closeButtnforModel,"model_views/UpdateBookQTYView");
+    }
     // end dashboard model opens section
 
-    // table view
     @FXML
-    private TableColumn<CustomerTM, String> addressCol;
-    @FXML
-    private TableColumn<CustomerTM, Integer> contactCol;
-    @FXML
-    private TableView<CustomerTM> customerTable;
-    @FXML
-    private TableColumn<CustomerTM, String> nameCol;
+    private ComboBox<String> updateComboBookName;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+    private TextField updateQTYText;
 
+    @FXML
+    private ImageView updateViewCloseButton;
+
+    @FXML
+    void closeModel(MouseEvent event) {
+        Stage stage = (Stage) this.updateViewCloseButton.getScene().getWindow();
+        stage.close();
     }
 
-    private final CustomerModel customerModel = new CustomerModel();
+    @FXML
+    void updateQTY(ActionEvent event) throws SQLException, ClassNotFoundException {
+        int qty = Integer.parseInt(updateQTYText.getText());
+        String bookName = updateComboBookName.getValue();
 
+        String resp = bookModel.updateBookQty(qty,bookName);
+        if (resp.equals("success")) {
+            new Alert(Alert.AlertType.INFORMATION,"Book QTY updated successfully.").show();
+            updateQTYText.setText("");
+            updateComboBookName.getItems().clear();
+        }else{
+            new Alert(Alert.AlertType.ERROR,"Something Went Wrong !").show();
+        }
+    }
+
+
+    public void getAllBooks() throws SQLException, ClassNotFoundException {
+        ArrayList<String> books = bookModel.getAllBooks();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(books);
+        updateComboBookName.setItems(observableList);
+    }
 }

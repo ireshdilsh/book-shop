@@ -168,13 +168,21 @@
                         <Image url="@../images/fire-image.png" />
                      </image>
                   </ImageView>
-                  <TableView fx:id="customerTable" layoutY="86.0" prefHeight="253.0" prefWidth="623.0" style="-fx-background-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
+                  <TableView fx:id="customerTable" layoutY="86.0" prefHeight="232.0" prefWidth="623.0" style="-fx-background-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
                      <columns>
                         <TableColumn fx:id="nameCol" prefWidth="236.79998779296875" text="C1" />
                         <TableColumn fx:id="addressCol" minWidth="0.0" prefWidth="197.59994506835938" text="C2" />
                         <TableColumn fx:id="contactCol" prefWidth="188.00004882812505" text="C1" />
                      </columns>
                   </TableView>
+                  <JFXButton layoutX="482.0" layoutY="-1.0" onAction="#openBookUpdateModel" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #000; -fx-border-radius: 10; -fx-background-radius: 10;" text="Update QTY" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Bold" size="13.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
                </children>
             </AnchorPane>
          </children>
