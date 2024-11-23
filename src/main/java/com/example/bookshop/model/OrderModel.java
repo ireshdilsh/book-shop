@@ -188,4 +188,24 @@ public class OrderModel {
         }
         return 0.0; // Return 0 if no discount found
     }
+
+    public ArrayList<String> getAllOrderIDS() throws SQLException, ClassNotFoundException {
+        String sql = "select o_id from order_details";
+        ArrayList<String> orderIDS = new ArrayList<>();
+        ResultSet resultSet = CrudUtil.executeCrud(sql);
+
+        while (resultSet.next()) {
+            orderIDS.add(String.valueOf(resultSet.getInt(1)));
+        }
+        return orderIDS;
+    }
+
+    public OrderDetails findByID(String id) throws SQLException, ClassNotFoundException {
+        String sql = "select book_id,Price,qty from order_details where o_id = ?";
+        ResultSet resultSet = CrudUtil.executeCrud(sql,id);
+        if (resultSet.next()) {
+            return new OrderDetails(resultSet.getInt(1),resultSet.getDouble(2),resultSet.getInt(3));
+        }
+        return null;
+    }
 }

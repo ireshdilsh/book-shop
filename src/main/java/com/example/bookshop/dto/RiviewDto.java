@@ -10,4 +10,8 @@ import lombok.NoArgsConstructor;
 public class RiviewDto {
     private String custName;
     private String discription;
+
+    public RiviewDto(String string) {
+        this.discription = string;
+    }
 }

@@ -62,13 +62,12 @@ public class PasswordController implements Initializable {
     }
 
     public void gotoForgetPasswordViewThree(ActionEvent actionEvent) {
-        int confirmationCode = new MailUtil().generateNumber();
-        int code = Integer.parseInt(emailText1.getText());
-
-        if (code == confirmationCode) {
+        int enteredCode = Integer.parseInt(confirmationCodeText.getText());
+        int confirmationCode = MailUtil.getConfirmationNumber();
+        if (enteredCode == confirmationCode) {
             new WindowUtil().navigateTo(passwordMainPane, "ForgetPasswordViewThree");
         } else {
-            new Alert(Alert.AlertType.ERROR, "Invalid Verificvation Code.Please check your Code.").show();
+            new Alert(Alert.AlertType.ERROR, "Invalid Verification Code. Please check your code.").show();
         }
     }
 

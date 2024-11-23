@@ -10,6 +10,9 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 public class MailUtil {
+
+    private static int confirmationNumber;
+
     public static void sendMail(String receipt) throws Exception{
 
         System.out.println("Mail Send Preparing.");
@@ -34,27 +37,27 @@ public class MailUtil {
         System.out.println("Message Sent Successfully.");
     }
 
-    static int confirmationNumber;
-
-    public int generateNumber(){
-        Random random = new Random();
-        confirmationNumber = random.nextInt(1000000);
-
-        while (true){
-            if(confirmationNumber > 100000 && confirmationNumber < 1000000){
-                System.out.println(confirmationNumber);
-                return confirmationNumber;
-            }
-        }
-    }
-
     private static Message prepareMessage(Session session, String myAccount, String receipt) throws Exception {
+
+        boolean isGenerate = true;
+        int number = 0;
+        Random random = new Random();
+        while (isGenerate) {
+            number = random.nextInt(1000000);
+            if (number > 100000) {
+                isGenerate = false;
+            } else {
+                isGenerate = true;
+            }
+        } confirmationNumber = number; // Store the generated confirmation number
 
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(myAccount));
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(receipt));
         message.setSubject("Welcme to Novel Nook. ");
-        message.setText("Your Confirmation Number is \n\n\t\t\t\t" + confirmationNumber);
+        message.setText("Your Confirmation Number is \n\n\t\t\t\t" + number);
+        System.out.println(number);
         return message;
     }
+    public static int getConfirmationNumber() { return confirmationNumber; }
 }

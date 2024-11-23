@@ -2,9 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -159,25 +158,62 @@
             </AnchorPane>
             <AnchorPane layoutX="204.0" layoutY="278.0">
                <children>
-                  <Label layoutX="11.0" layoutY="6.0" text="Recent Orders">
+                  <Label layoutX="11.0" layoutY="6.0" text="Find Order Details">
                      <font>
                         <Font name="Gabarito Regular" size="20.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="38.0" fitWidth="22.0" layoutX="147.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="38.0" fitWidth="22.0" layoutX="179.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/fire-image.png" />
                      </image>
                   </ImageView>
-                  <TableView fx:id="customerTable" layoutY="57.0" prefHeight="253.0" prefWidth="623.0" style="-fx-background-color: #fafafa; -fx-background-radius: 10; -fx-border-radius: 10;">
-                     <columns>
-                        <TableColumn fx:id="nameCol" prefWidth="236.79998779296875" text="C1" />
-                        <TableColumn fx:id="addressCol" minWidth="0.0" prefWidth="197.59994506835938" text="C2" />
-                        <TableColumn fx:id="contactCol" prefWidth="188.00004882812505" text="C1" />
-                     </columns>
-                  </TableView>
                </children>
             </AnchorPane>
+            <ComboBox fx:id="ordersComboBox" layoutX="217.0" layoutY="361.0" prefHeight="38.0" prefWidth="195.0" promptText="select OrderID" style="-fx-background-color: #fafafa; -fx-background-radius: 4; -fx-border-radius: 4;" />
+            <Label layoutX="217.0" layoutY="333.0" text="Order ID">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="462.0" layoutY="361.0" onAction="#clearOrdersFields" prefHeight="38.0" prefWidth="126.0" style="-fx-background-color: #000; -fx-background-radius: 10; -fx-border-radius: 10;" text="Clear Fields" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label layoutX="217.0" layoutY="435.0" text="Book ID">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="390.0" layoutY="435.0" text="Payment Amount">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="605.0" layoutY="435.0" text="QTY">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="orderDetaailbookLbl" layoutX="217.0" layoutY="460.0" prefHeight="38.0" prefWidth="144.0">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="orderDetaailPriceLbl" layoutX="390.0" layoutY="460.0" prefHeight="38.0" prefWidth="182.0">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="orderDetaailQtyLbl" layoutX="605.0" layoutY="460.0" prefHeight="38.0" prefWidth="182.0">
+               <font>
+                  <Font name="Gabarito Regular" size="13.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
       <ImageView fitHeight="24.0" fitWidth="33.0" layoutX="103.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">

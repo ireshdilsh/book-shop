@@ -44,4 +44,15 @@ public class RiviewModel {
         }
         return riviews;
     }
+
+    public RiviewDto findByName(String name) throws SQLException, ClassNotFoundException {
+        String sql = "select Discription from riview where custName = ?";
+        ResultSet resultSet = CrudUtil.executeCrud(sql,name);
+        if (resultSet.next()){
+            return new RiviewDto(
+                    resultSet.getString(1)
+            );
+        }
+        return null;
+    }
 }

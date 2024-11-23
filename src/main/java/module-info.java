@@ -10,7 +10,7 @@ module com.example.bookshop {
     opens com.example.bookshop to javafx.fxml;
     opens com.example.bookshop.controller to javafx.fxml;
     opens com.example.bookshop.controller.modelsController to javafx.fxml;
-    opens com.example.bookshop.dto.tm to javafx.base;
+    opens com.example.bookshop.dto to javafx.base;
 
     exports com.example.bookshop;
     exports com.example.bookshop.controller;

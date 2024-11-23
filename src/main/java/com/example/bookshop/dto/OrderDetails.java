@@ -13,4 +13,9 @@ public class OrderDetails {
     private Double price;
     private int quantity;
 
+    public OrderDetails(int anInt, double aDouble, int anInt1) {
+        this.bookID = anInt;
+        this.price = aDouble;
+        this.orderID = anInt1;
+    }
 }

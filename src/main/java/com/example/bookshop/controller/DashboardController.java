@@ -6,12 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.example.bookshop.dto.BookDto;
-import com.example.bookshop.dto.CustomerDto;
-import com.example.bookshop.dto.EmployeeDto;
-import com.example.bookshop.dto.RiviewDto;
-import com.example.bookshop.dto.tm.CustomerTM;
-import com.example.bookshop.dto.tm.RiviewTM;
+import com.example.bookshop.dto.*;
 import com.example.bookshop.model.*;
 import com.example.bookshop.utils.WindowUtil;
 import javafx.collections.FXCollections;
@@ -20,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -37,7 +31,9 @@ public class DashboardController implements Initializable {
             getEmployeeNames();
             getSalaryAmount();
             getPromotionType();
-           // getAllRiviewsTable();
+            getAllSupplierNames();
+            getAllOrderIDS();
+            getAllCustomerNameForRiviews();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,6 +85,49 @@ public class DashboardController implements Initializable {
                 empContactLbl.setText(String.valueOf(employeeDto.getContact()));
             }
         });
+        //---------------------------------//
+        supplierComboBox1.setOnAction(event -> {
+            String name = supplierComboBox1.getSelectionModel().getSelectedItem();
+            SupplierDto supplierDto = null;
+            try {
+                getAllSupplierNames();
+                supplierDto = supplierModel.findByName(name);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (supplierDto != null){
+                supplierContactLbl.setText(String.valueOf(supplierDto.getContactNo()));
+            }
+        });
+        //---------------------------------//
+        ordersComboBox.setOnAction(event -> {
+            String id = ordersComboBox.getSelectionModel().getSelectedItem();
+            OrderDetails orderDetails = null;
+            try {
+                orderDetails = orderModel.findByID(id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (orderDetails != null){
+                orderDetaailbookLbl.setText(String.valueOf(orderDetails.getBookID()));
+                orderDetaailPriceLbl.setText(String.valueOf(orderDetails.getPrice()));
+                orderDetaailQtyLbl.setText(String.valueOf(orderDetails.getQuantity()));
+            }
+        });
+        riviewCustomerNameComboBox.setOnAction(event -> {
+            String name = riviewCustomerNameComboBox.getSelectionModel().getSelectedItem();
+            RiviewDto riviewDto = null;
+            try {
+                riviewDto = riviewModel.findByName(name);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (riviewDto != null){
+                discriptionRiviewLbl.setText(riviewDto.getDiscription());
+            }else{
+                discriptionRiviewLbl.setText("Not Riview Yet");
+            }
+        });
     }
 
     public AnchorPane dashboardPane;
@@ -98,34 +137,6 @@ public class DashboardController implements Initializable {
     private AnchorPane mainPane;
     @FXML
     private ImageView closeButtnforModel;
-
-
-    // -------------------------------------------------- //
-    @FXML
-    private TableColumn<RiviewTM, String> discription ;
-    @FXML
-    private TableView<RiviewTM> riviewTable ;
-    @FXML
-    private TableColumn<RiviewTM, String> custName;
-
-    public void getAllRiviewsTable() throws SQLException, ClassNotFoundException {
-
-        custName.setCellValueFactory(new PropertyValueFactory<>("custName"));
-        discription.setCellValueFactory(new PropertyValueFactory<>("discription"));
-
-        ArrayList<RiviewDto> riviewDtos = riviewModel.getAllRiviewsTable();
-
-        ObservableList<RiviewTM> riviewTMS = FXCollections.observableArrayList();
-
-        for (RiviewDto riviewDto : riviewDtos) {
-            RiviewTM riviewTM = new RiviewTM(
-                riviewDto.getCustName(),riviewDto.getDiscription()
-            );
-            riviewTMS.add(riviewTM);
-        }
-
-        riviewTable.setItems(riviewTMS);
-    }
 
     // -------------------------------------------------- //
 
@@ -271,6 +282,7 @@ public class DashboardController implements Initializable {
         customerNameComboBox.setItems(observableList);
         customerNameComboBox1.setItems(observableList);
         customerNameComboBox2.setItems(observableList);
+        riviewCustomerNameComboBox.setItems(observableList);
     }
 
     public void updateCustomer(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -415,4 +427,93 @@ public class DashboardController implements Initializable {
 
     //-----------------------------------------------------//
 
+    @FXML
+    private ComboBox<String> supplierComboBox1 = new ComboBox<>();
+    @FXML
+    private ComboBox<String> supplierComboBox2 = new ComboBox<>();
+    @FXML
+    private Label supplierContactLbl;
+    @FXML
+    private TextField supplierContactTxt;
+    @FXML
+    private TextField supplierNameTxt;
+
+    public void getAllSupplierNames() throws SQLException, ClassNotFoundException {
+        ArrayList<String> names = supplierModel.getAllSupplierNames();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(names);
+        supplierComboBox1.setItems(observableList);
+        supplierComboBox2.setItems(observableList);
+    }
+
+
+    public void deleteSupplier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        String name = supplierComboBox2.getSelectionModel().getSelectedItem();
+        String resp = supplierModel.deleteSupplier(name);
+
+        if (resp.equals("success")){
+            new Alert(Alert.AlertType.INFORMATION,"Supplier Deleted Success.").show();
+            supplierComboBox2.getItems().clear();
+        }else{
+            new Alert(Alert.AlertType.ERROR,"Something Went Wrong .").show();
+        }
+    }
+
+    public void updateSupplier(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        String name = supplierComboBox2.getSelectionModel().getSelectedItem();
+       SupplierDto supplierDto = new SupplierDto(
+               supplierNameTxt.getText(),Integer.parseInt(supplierContactTxt.getText())
+       );
+      String resp = supplierModel.updateSupplier(supplierDto,name);
+      if (resp.equals("success")){
+          new Alert(Alert.AlertType.INFORMATION,"Supplier Updated successfully.").show();
+          supplierComboBox2.getItems().clear();
+          supplierNameTxt.setText("");
+          supplierContactTxt.setText("");
+      }else{
+          new Alert(Alert.AlertType.ERROR,"Something Went Wrong !").show();
+      }
+    }
+
+    //-----------------------------------------------------//
+
+    @FXML
+    private Label orderDetaailPriceLbl;
+
+    @FXML
+    private Label orderDetaailQtyLbl;
+
+    @FXML
+    private Label orderDetaailbookLbl;
+
+    @FXML
+    private ComboBox<String> ordersComboBox = new ComboBox<>();
+
+    public void getAllOrderIDS() throws SQLException, ClassNotFoundException {
+        ArrayList<String> ids = orderModel.getAllOrderIDS();
+        ObservableList<String> observableList = FXCollections.observableArrayList();
+        observableList.addAll(ids);
+        ordersComboBox.setItems(observableList);
+    }
+
+    public void clearOrdersFields(ActionEvent actionEvent) {
+        ordersComboBox.getItems().clear();
+        orderDetaailPriceLbl.setText("");
+        orderDetaailQtyLbl.setText("");
+        orderDetaailbookLbl.setText("");
+    }
+
+    //-----------------------------------------------------//
+    public void getAllCustomerNameForRiviews() throws SQLException, ClassNotFoundException {
+        getAllCustomerName();
+    }
+    @FXML
+    private Label discriptionRiviewLbl;
+
+    @FXML
+    private ComboBox<String> riviewCustomerNameComboBox = new ComboBox<>();
+    public void clearFieldsRiview(ActionEvent actionEvent) {
+        riviewCustomerNameComboBox.getItems().clear();
+        discriptionRiviewLbl.setText("");
+    }
 }

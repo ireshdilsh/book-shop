@@ -10,4 +10,8 @@ import lombok.NoArgsConstructor;
 public class SupplierDto {
     private String supplierName;
     private int contactNo;
+
+    public SupplierDto(int anInt) {
+        this.contactNo = anInt;
+    }
 }
